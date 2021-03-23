@@ -36,6 +36,7 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     public List<String> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException();
     }
+
     protected void removeRange(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException();
     }
@@ -44,4 +45,21 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
         throw new UnsupportedOperationException();
     }
 
+
+    static class Entry<T> implements Serializable {
+        String elementName;
+        boolean availableToAddLeftChildren = true;
+        boolean availableToAddRightChildren = true;
+        Entry<T> parent;
+        Entry<T> leftChild;
+        Entry<T> rightChild;
+
+        public Entry(String elementName) {
+            this.elementName = elementName;
+        }
+
+        public boolean isAvailableToAddChildren() {
+            return (availableToAddLeftChildren | availableToAddRightChildren);
+        }
+    }
 }
