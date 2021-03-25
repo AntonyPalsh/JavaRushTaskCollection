@@ -1,10 +1,7 @@
 package com.javarush.task.task20.task2028;
 
 import java.io.Serializable;
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /* 
 Построй дерево(1)
@@ -12,7 +9,6 @@ import java.util.List;
 
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
     ArrayList<Entry<String>> list = new ArrayList<>();
-    int count = 0;
     Entry<String> root;
 
 
@@ -24,30 +20,67 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     @Override
     public boolean add(String elementName) {
         Entry<String> newEntry = new Entry<>(elementName);
+        boolean availableAdd = false;
         for (Entry<String> entry : list ) {
             if (entry.availableToAddLeftChildren) {
                 entry.leftChild = newEntry;
                 entry.availableToAddLeftChildren = false;
                 newEntry.parent = entry;
+                availableAdd = true;
+                newEntry.countDeepLeft = entry.countDeepLeft + 2;
                 break;
             }
             else if (entry.availableToAddRightChildren) {
                 entry.rightChild = newEntry;
                 entry.availableToAddRightChildren = false;
                 newEntry.parent = entry;
+                availableAdd = true;
+                newEntry.countDeepLeft = entry.countDeepLeft + 1;
                 break;
             }
         }
-        count++;
+
+        if (!availableAdd) {int maxDeep = 0;
+            for (Entry<String> entry : list) {
+                if (entry.countDeepLeft > maxDeep) maxDeep = entry.countDeepLeft;
+            }
+            for (Entry<String> entry : list) {
+                if (entry.countDeepLeft == maxDeep) {
+                    entry.availableToAddLeftChildren = true;
+                    entry.leftChild = newEntry;
+                    entry.availableToAddLeftChildren = false;
+                    newEntry.parent = entry;
+                    newEntry.countDeepLeft = entry.countDeepLeft + 2;
+                }
+            }
+        }
         return list.add(newEntry);
+    }
+
+    public boolean remove(Object o) {
+        if (!(o instanceof String)) throw new UnsupportedOperationException();
+        for (Entry<String> entry : list) {
+            if (entry.getName().equals(o)) {
+                removeChild(entry);
+                list.remove(entry);
+                break;
+            }
+
+        }
+        return true;
+    }
+
+    void removeChild(Entry<String> entry) {
+        if (entry.leftChild != null && list.contains(entry.leftChild)) removeChild(entry.leftChild);
+        if (entry.rightChild != null && list.contains(entry.rightChild)) removeChild(entry.rightChild);
+        list.remove(entry);
     }
 
     public String getParent(String elementName) {
         String nameParent = null;
         for (Entry<String> entry : list) {
             if (!entry.getName().equals("root")) {
-
-                if (entry.getName().equals(elementName)) {
+                if (entry.getName().equals(elementName) && entry.parent != null) {
                     nameParent = entry.parent.getName();
                     break;
                 }
@@ -64,7 +97,7 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
     @Override
     public int size() {
-        return count;
+        return list.size() - 1;
     }
 
     public String set(int index, String element) {
@@ -97,6 +130,7 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
         String elementName;
         boolean availableToAddLeftChildren;
         boolean availableToAddRightChildren;
+        int countDeepLeft;
 
         Entry<T> parent;
         Entry<T> leftChild;
@@ -106,7 +140,6 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
             this.elementName = elementName;
             availableToAddRightChildren = true;
             availableToAddLeftChildren = true;
-
         }
 
         public String getName() {
@@ -114,7 +147,7 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
         }
 
         public boolean isAvailableToAddChildren() {
-            return (availableToAddLeftChildren | availableToAddRightChildren);
+            return (availableToAddLeftChildren || availableToAddRightChildren);
         }
     }
 
