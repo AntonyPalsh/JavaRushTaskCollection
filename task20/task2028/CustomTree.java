@@ -40,13 +40,14 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
             }
         }
 
-        if (!availableAdd) {int maxDeep = 0;
+        if (!availableAdd) {
+            int maxDeep = 0;
             for (Entry<String> entry : list) {
                 if (entry.countDeepLeft > maxDeep) maxDeep = entry.countDeepLeft;
             }
             for (Entry<String> entry : list) {
                 if (entry.countDeepLeft == maxDeep) {
-                    entry.availableToAddLeftChildren = true;
+                    //entry.availableToAddLeftChildren = true;
                     entry.leftChild = newEntry;
                     entry.availableToAddLeftChildren = false;
                     newEntry.parent = entry;
@@ -65,7 +66,6 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
                 list.remove(entry);
                 break;
             }
-
         }
         return true;
     }
