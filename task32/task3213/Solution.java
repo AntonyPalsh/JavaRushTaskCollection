@@ -19,7 +19,7 @@ public class Solution {
         if (reader != null) {
             int i;
             while ((i = reader.read()) != -1) {
-                str = str + Character.toString((char)(i + key));
+                str += Character.toString((char) (i + key));
             }
         }
         return str;
