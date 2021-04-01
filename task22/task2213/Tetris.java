@@ -13,6 +13,14 @@ public class Tetris {
         return this.figure;
     }
 
+    void run() {
+
+    }
+
+    void step() {
+
+    }
+
     public static void main(String[] args) {
 
     }
