@@ -5,6 +5,14 @@ public class Tetris {
     private Field field;
     private Figure figure;
 
+    public Field getField() {
+        return this.field;
+    }
+
+    public Figure getFigure() {
+        return this.figure;
+    }
+
     public static void main(String[] args) {
 
     }
