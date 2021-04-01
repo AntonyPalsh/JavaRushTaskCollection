@@ -24,4 +24,36 @@ public class Figure {
     public int[][] getMatrix() {
         return matrix;
     }
+
+    void left() {
+
+    }
+
+    void right() {
+
+    }
+
+    void down() {
+
+    }
+
+    void up() {
+
+    }
+
+    void rotate() {
+
+    }
+
+    void downMaximum() {
+
+    }
+
+    boolean isCurrentPositionAvailable() {
+        return true;
+    }
+
+    void landed() {
+
+    }
 }
