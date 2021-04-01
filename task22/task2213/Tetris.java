@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
  * Класс Tetris - содержит основной функционал игры.
  */
 public class Tetris {
+
     private Field field;                //Поле с клетками
     private Figure figure;              //Фигурка
 
@@ -75,23 +76,20 @@ public class Tetris {
         System.out.println("Game Over");
     }
 
-    /**
-     * Один шаг игры
-     */
     public void step() {
         //опускам фигурку вниз
         figure.down();
-        //если разместить фигурку на текущем месте невозможно:
-        //поднимаем обратно
-        if (!figure.isCurrentPositionAvailable())
-        {
-            figure.up();
-            //приземляем
-            figure.landed();
-            //удаляем заполненные линии
-            field.removeFullLines();
-            //создаем новую фигурку
-            figure = FigureFactory.createRandomFigure(field.getWidth() / 2, 0);
+
+        //если разместить фигурку на текущем месте невозможно
+        if (!figure.isCurrentPositionAvailable()) {
+            figure.up();                    //поднимаем обратно
+            figure.landed();                //приземляем
+
+            isGameOver = figure.getY() <= 1;//если фигурка приземлилась на самом верху - игра окончена
+
+            field.removeFullLines();        //удаляем заполненные линии
+
+            figure = FigureFactory.createRandomFigure(field.getWidth() / 2, 0); //создаем новую фигурку
         }
     }
 

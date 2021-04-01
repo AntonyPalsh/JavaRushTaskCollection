@@ -26,19 +26,19 @@ public class Figure {
     }
 
     void left() {
-
+        if (isCurrentPositionAvailable()) x--;
     }
 
     void right() {
-
+        if (isCurrentPositionAvailable()) x++;
     }
 
     void down() {
-
+        y++;
     }
 
     void up() {
-
+        y--;
     }
 
     void rotate() {
