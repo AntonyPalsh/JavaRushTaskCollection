@@ -1,5 +1,8 @@
 package com.javarush.task.task25.task2515;
 
+
+import java.awt.geom.Point2D;
+
 public abstract class BaseObject {
 
     private double x;
@@ -40,4 +43,21 @@ public abstract class BaseObject {
     public boolean isAlive() {
         return isAlive;
     }
+
+    public void draw() {
+
+    }
+
+    public void move() {
+
+    }
+
+    public void die() {
+        isAlive = false;
+    }
+
+    public boolean isIntersect(BaseObject o) {
+        return Point2D.distance(x, y, o.x, o.y) < Math.max(radius, o.radius);
+    }
+
 }
