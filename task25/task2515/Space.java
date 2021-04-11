@@ -7,6 +7,7 @@ public class Space {
 
     private int width;
     private int height;
+    public static Space game;
 
     private SpaceShip ship;
     private List<Ufo> ufos = new ArrayList<>();
