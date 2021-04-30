@@ -15,7 +15,7 @@ public class Solution {
     public static class Monkey {
     }
 
-    public static void main(String args[]) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         helper.startTime();
         List<PhantomReference<Monkey>> list = helper.getPopulatedList();
 
@@ -76,7 +76,11 @@ public class Solution {
         }
 
         public List<PhantomReference<Monkey>> getPopulatedList() {
-            return null;
+            List<PhantomReference<Monkey>> list = new ArrayList<>();
+            for (int i = 0; i < 200; i++) {
+                list.add(new PhantomReference<>(new Monkey(), helper.getQueue()));
+            }
+            return list;
         }
 
         public void finish() throws InterruptedException {
